@@ -39,12 +39,12 @@ class UrlController {
     if (!url) return res.status(400).json({ msg: "url not provided" });
 
     try {
-      let site = await axios.head(url);      
+      let site = await axios.head(url);
     } catch (error) {
       if (error.code == 'ENOTFOUND') {
         return res.status(400).json({ msg: "url not exists" });
       }
-      if (error.code =='ECONNREFUSED') {
+      if (error.code == 'ECONNREFUSED') {
         return res.status(400).json({ msg: "connection refused to url" });
       }
       // throw error;
@@ -76,13 +76,48 @@ class UrlController {
     }
   }
 
-  async count(req: Request, res: Response) {
-    const { shortId } = req.body;
+  async getOne(req: Request, res: Response) {
+    const { shortId } = req.params;
 
     if (!shortId) return res.status(400).json({ msg: "id not provided" });
 
     try {
-      const URL = await Url.findOne({ shortId });
+      const url: IUrl | null = await Url.findOne({ shortId: shortId }, ['-__v']);
+
+      if (!url) return res.status(404).json({ msg: "not found" });
+
+      const urlAccessList = await UrlAccess.find({ url: url._id }, ['-__v']);
+
+      return res.status(200).json({ url, urlAccess: urlAccessList });
+
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ msg: "some error occured" });
+    }
+  }
+
+  async index(req: Request, res: Response) {
+
+    try {
+      const URLS = await Url.find({}, ['-__v']);
+
+      if (!URLS) return res.status(404).json({ msg: "empty list" });
+
+      return res.status(200).json(URLS);
+
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ msg: "some error occured" });
+    }
+  }
+
+  async count(req: Request, res: Response) {
+    const { shortId } = req.params;
+
+    if (!shortId) return res.status(400).json({ msg: "id not provided" });
+
+    try {
+      const URL: IUrl | null = await Url.findOne({ shortId });
       if (!URL) return res.status(400).json({ msg: "invalid url id" });
 
       let aggrCount = await UrlAccess.aggregate([{ $match: { url: { $eq: URL._id } } }, { $count: 'count' }]);

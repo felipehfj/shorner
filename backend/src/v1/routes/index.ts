@@ -16,14 +16,19 @@ const validate = {
         shortId: Joi.string().required(),
       })
     }),
+    getOne: celebrate({
+      [Segments.PARAMS]: Joi.object().keys({
+        shortId: Joi.string().required(),
+      })
+    }),
     create: celebrate({
       [Segments.BODY]: Joi.object().keys({
         url: Joi.string().required().max(1000).uri({ scheme: ["http", "https"] }),
       })
     }),
     count: celebrate({
-      [Segments.BODY]: Joi.object().keys({
-        shortId: Joi.string().required().length(10),
+      [Segments.PARAMS]: Joi.object().keys({
+        shortId: Joi.string().required(),
       })
     }),
   },
@@ -59,9 +64,12 @@ const validate = {
   }
 }
 
-routes.get(['/:shortId', '/api/v1/url/:shortId'], validate.url.redirect, UrlController.redirect)
-routes.post('/api/v1/url', validate.url.create, UrlController.create)
-routes.post('/api/v1/url/count', validate.url.count, UrlController.count)
+routes.get(['/:shortId','/api/v1/urls/:shortId/redirect'], validate.url.redirect, UrlController.redirect)
+routes.get('/api/v1/urls/:shortId', validate.url.getOne, UrlController.getOne)
+routes.get('/api/v1/urls/:shortId/count', validate.url.count, UrlController.count)
+routes.get('/api/v1/urls', UrlController.index)
+routes.post('/api/v1/urls', validate.url.create, UrlController.create)
+
 
 routes.get('/api/v1/auth', auth, AuthController.getUser);
 routes.post('/api/v1/auth/login', validate.auth.login, AuthController.login);
