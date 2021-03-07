@@ -1,7 +1,7 @@
 import { Container } from '@material-ui/core';
 import Link from 'next/link';
 import React, { Fragment } from 'react';
-import Test from '../components/Test';
+import Test from '../src/components/Shortner';
 
 const Home: React.FC = () => {
   return (
@@ -9,7 +9,7 @@ const Home: React.FC = () => {
       <Container>
         <Test />
         <div>
-          <Link href="/login">Teste</Link>
+          <Link href="/login">Login</Link>
         </div>
       </Container>
     </Fragment>

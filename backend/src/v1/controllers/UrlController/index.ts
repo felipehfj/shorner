@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import { connect } from 'mongoose';
 
-import Url from "../../models/UrlModel";
+import Url, { IUrl } from "../../models/UrlModel";
 import UrlAccess from "../../models/UrlAccessModel";
 import db from '../../../database/config';
+import { nanoid } from 'nanoid';
 
 class UrlController {
   constructor() {
@@ -40,6 +41,16 @@ class UrlController {
       let URL = await Url.findOne({ url });
       if (!URL) {
         let newURL = new Url({ url });
+
+        let hasOne: IUrl | null = null;
+        do {
+          hasOne = await Url.findOne({ shortId: newURL.shortId });
+          if (hasOne) {
+            newURL.shortId = nanoid(10);
+          }
+        } while (!!hasOne)
+
+
         await newURL.save();
         return res.status(201).json({ shortId: newURL.shortId, url });
       }

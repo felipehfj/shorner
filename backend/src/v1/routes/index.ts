@@ -23,7 +23,7 @@ const validate = {
     }),
     count: celebrate({
       [Segments.BODY]: Joi.object().keys({
-        shortId: Joi.string().required().min(7).max(14),
+        shortId: Joi.string().required().length(10),
       })
     }),
   },

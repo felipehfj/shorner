@@ -1,7 +1,5 @@
 import { Document, Schema, Model, model } from "mongoose";
-import shortid from "shortid";
-
-shortid.characters("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_");
+import { nanoid } from "nanoid";
 
 export interface IUrl extends Document {
   url: string,
@@ -18,7 +16,7 @@ const UrlSchema: Schema = new Schema(
     shortId: {
       type: String,
       required: true,
-      default: shortid.generate(),
+      default: nanoid(10),
       unique: true
     },
     createdAt: {

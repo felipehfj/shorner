@@ -1,15 +1,9 @@
-// function MyApp({ Component, pageProps }) {
-//   return <Component {...pageProps} />
-// }
-
-// export default MyApp
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from '../components/Theme/theme';
+import theme from '../src/components/Theme/theme';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
