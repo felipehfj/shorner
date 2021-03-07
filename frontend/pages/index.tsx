@@ -8,13 +8,12 @@ import Shortner from '../src/components/Shortner';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+    <Typography variant="body2" color="textSecondary" align="center">      
       <Link color="inherit" href="#">
-        Shortner
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+        Shortner by @felipehfj
+      </Link>
+      {' | '}
+      {new Date().getFullYear()}.
     </Typography>
   );
 }

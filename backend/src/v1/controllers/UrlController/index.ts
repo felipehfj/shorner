@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { connect } from 'mongoose';
+import axios from 'axios';
 
 import Url, { IUrl } from "../../models/UrlModel";
 import UrlAccess from "../../models/UrlAccessModel";
@@ -38,6 +39,19 @@ class UrlController {
     if (!url) return res.status(400).json({ msg: "url not provided" });
 
     try {
+      let site = await axios.head(url);      
+    } catch (error) {
+      if (error.code == 'ENOTFOUND') {
+        return res.status(400).json({ msg: "url not exists" });
+      }
+      if (error.code =='ECONNREFUSED') {
+        return res.status(400).json({ msg: "connection refused to url" });
+      }
+      // throw error;
+    }
+
+    try {
+
       let URL = await Url.findOne({ url });
       if (!URL) {
         let newURL = new Url({ url });

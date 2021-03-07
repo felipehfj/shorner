@@ -61,7 +61,7 @@ export default function Test() {
         setErrorMsg('');
       } catch (error) {
         console.log(error);
-        setErrorMsg(error.toString());
+        setErrorMsg(error.response.data.msg??error.message);
       }
     }
   }
@@ -84,6 +84,7 @@ export default function Test() {
           <TextField
             className={classes.formControl}
             fullWidth
+            autoComplete={'off'}
             id="standard-basic"
             placeholder="url"
             value={urlToShort}
@@ -101,7 +102,7 @@ export default function Test() {
         (shortUrl || errorMsg) && <Box width={1}>
           <Paper elevation={3} className={classes.boxUrl}>
             {
-              hasUrl(shortUrl) && <Link href={shortUrl}><a target={'_blank'}>{shortUrl}</a></Link>
+              hasUrl(shortUrl) && <Link href={shortUrl}><a target={'_blank'} rel="noopener">{shortUrl}</a></Link>
             }
             {
               errorMsg && <Alert severity="error">{errorMsg}</Alert>

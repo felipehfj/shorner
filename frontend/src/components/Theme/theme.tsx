@@ -33,7 +33,7 @@ const dark = createMuiTheme({
       main: red.A400,
     },
     background: {
-      default: '#dadada',
+      default: '#000',
     },
   },
 });
