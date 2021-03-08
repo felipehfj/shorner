@@ -33,6 +33,24 @@ class UrlController {
     }
   }
 
+  async redirectUrl(req: Request, res: Response) {
+    const { shortId } = req.params;
+
+    if (!shortId) return res.status(400).json({ msg: "id not provided" });
+
+    try {
+      const URL = await Url.findOne({ shortId });
+      if (!URL) return res.status(400).json({ msg: "invalid url id" });
+
+      await UrlAccess.create({ url: URL._id });
+
+      return res.send(URL.url);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ msg: "some error occured" });
+    }
+  }
+
   async create(req: Request, res: Response) {
     const { url } = req.body;
 

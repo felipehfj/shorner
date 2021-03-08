@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Test() {
   const classes = useStyles();
+  const [generatedShortId, setGeneratedShortId] = useState<string>("");
   const [urlToShort, setUrlToShort] = useState<string>("");
   const [shortUrl, setShortUrl] = useState<string>("");
   const [protocol, setProtocol] = React.useState('https://');
@@ -48,6 +49,12 @@ export default function Test() {
     else return false;
   }
 
+  const redirect = async () => {
+    let { data } = await urlService.redirect(generatedShortId);
+    console.log(data)
+    window.open(data)
+    }
+
 
   const generateShortUrl = async (uri: string) => {
     setShortUrl('');
@@ -57,11 +64,13 @@ export default function Test() {
       try {
         const { data } = await urlService.createUrl({ url: uri });
         const { url, shortId } = data;
+        setGeneratedShortId(shortId);
         setShortUrl(`${NEXT_PUBLIC_API_URL}/${shortId}`);
         setErrorMsg('');
       } catch (error) {
+        setGeneratedShortId('');
         console.log(error);
-        setErrorMsg(error.response.data.msg??error.message);
+        setErrorMsg(error.response.data.msg ?? error.message);
       }
     }
   }
@@ -102,7 +111,7 @@ export default function Test() {
         (shortUrl || errorMsg) && <Box width={1}>
           <Paper elevation={3} className={classes.boxUrl}>
             {
-              hasUrl(shortUrl) && <Link href={shortUrl}><a target={'_blank'} rel="noopener">{shortUrl}</a></Link>
+              hasUrl(shortUrl) && <><Link href={shortUrl}><a target={'_blank'} rel="noopener">{shortUrl}</a></Link><Button onClick={() => redirect()} >Visitar</Button></>
             }
             {
               errorMsg && <Alert severity="error">{errorMsg}</Alert>

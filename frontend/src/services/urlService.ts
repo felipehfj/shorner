@@ -8,7 +8,7 @@ class UrlService {
     return api.post(`${routeServicePrefix}`, data, { params: params })
   }
 
-  redirect(shortId: string, params?: AxiosRequestConfig): Promise<AxiosResponse<Array<UrlModel>>> {
+  redirect(shortId: string, params?: AxiosRequestConfig): Promise<AxiosResponse<string>> {
     return api.get(`${routeServicePrefix}/${shortId}/redirect`, { params: params })
   }
 

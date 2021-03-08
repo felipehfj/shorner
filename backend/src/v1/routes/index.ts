@@ -64,7 +64,8 @@ const validate = {
   }
 }
 
-routes.get(['/:shortId','/api/v1/urls/:shortId/redirect'], validate.url.redirect, UrlController.redirect)
+routes.get('/:shortId', validate.url.redirect, UrlController.redirect)
+routes.get('/api/v1/urls/:shortId/redirect', validate.url.redirect, UrlController.redirectUrl)
 routes.get('/api/v1/urls/:shortId', validate.url.getOne, UrlController.getOne)
 routes.get('/api/v1/urls/:shortId/count', validate.url.count, UrlController.count)
 routes.get('/api/v1/urls', UrlController.index)
