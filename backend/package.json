@@ -4,9 +4,11 @@
   "description": "Url shortner api",
   "main": "index.ts",
   "scripts": {
-    "test": "set NODE_ENV=development&& jest",
-    "start": "set NODE_ENV=development&& nodemon src/server.ts",
-    "deploy": "set NODE_ENV=production&& node build/src/server.js",
+    "dev": "cross-env NODE_ENV=development nodemon src/server.ts",
+    "test": "cross-env NODE_ENV=development jest",
+    "start": "cross-env NODE_ENV=production node build/src/server.js",
+    "start-dev": "cross-env NODE_ENV=development nodemon build/src/server.js",
+    "deploy": "cross-env NODE_ENV=production node build/src/server.js",
     "build": "tsc --project ./"
   },
   "keywords": [],
