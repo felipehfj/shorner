@@ -8,7 +8,7 @@ import Shortner from '../src/components/Shortner';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">      
+    <Typography variant="body2" color="textSecondary" align="center">
       <Link color="inherit" href="#">
         Shortner by @felipehfj
       </Link>
@@ -56,6 +56,11 @@ export default function Pricing() {
           <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
             Shortner
           </Typography>
+          <NextLink href="/urls" as="/urls">
+            <Button color="primary" variant="outlined" className={classes.link}>
+              Urls
+            </Button>
+          </NextLink>
           <NextLink href="/login" as="/login">
             <Button color="primary" variant="outlined" className={classes.link}>
               Login

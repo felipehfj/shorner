@@ -35,7 +35,7 @@ export default function ShortIdList({ urls, notFound }: ShortIdListProps) {
               )
             })
           }
-        </Grid>=
+        </Grid>
       </Container>
     </Fragment>
   );

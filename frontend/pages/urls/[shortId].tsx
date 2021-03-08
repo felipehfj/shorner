@@ -41,6 +41,7 @@ export async function getStaticProps({ params }: Params) {
         ...url,
       },
     },
+    revalidate: 1    
   }
 }
 

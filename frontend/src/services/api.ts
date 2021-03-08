@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL
+
 const api = axios.create({
-  baseURL: 'http://192.168.1.12:3333',
+  baseURL: NEXT_PUBLIC_API_URL,
   headers: {
     'Access-Control-Allow-Origin': '*'
   },
